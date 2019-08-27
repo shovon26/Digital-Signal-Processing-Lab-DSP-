@@ -1,0 +1,56 @@
+a=0.5;
+r=0.96;
+N=100;
+for n=1:N,
+y(n)=2*n*(0.9^n);
+yn(n)=y(n) + (rand() - 0.5);
+
+end
+n=1:1:N;
+subplot(2,2,1)
+stem(n,y)
+title('Original sequence')
+
+subplot(2,2,2)
+stem(n,yn)
+title('Noisy sequence')
+
+subplot(2,2,3)
+plot(n,y)
+title('Original Signal')
+
+subplot(2,2,4)
+plot(n,yn)
+title('Noisy Signal')
+
+M=5;
+b=ones(M,1)/M;
+z=filter(b,1,yn);
+figure
+plot(n,yn,'r',n,z,'b')
+legend('Noisy Signal', 'Filter Signal')
+
+
+y=u(2000);
+u=y(20000);
+x=y+u;
+sound=(x)
+
+load handel
+u=y(1:20000)
+sound(u)
+
+x=u+0.5*rand(length(u),1)-0.5;
+sound(x)
+
+M=5;
+b=ones(M,1)/M;
+z=2*filter(b,1,x);
+sound(z)
+subplot(3,1,1)
+subplot(3,1,1)
+plot(u)
+title('Original Signal')
+subplot(3,1,2)
+plot(z)
+title('Filtered Signal')
