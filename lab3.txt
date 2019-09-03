@@ -1,0 +1,89 @@
+///DFT and IDFT of a sequence
+
+
+x=[1 0 0 1];
+X=fft(x);
+subplot(2,1,1)
+stem(abs(X))
+xlabel('m')
+ylabel('X(m)')
+title('Absolute value of DFT Sequence')
+subplot(2,1,2)
+stem(angle(X))
+xlabel('m')
+ylabel('AngleX(m)')
+title('Angle of DFT Sequence')
+
+
+
+N = 8;
+n=0:1:N-1; Fs=8000; Ts=1/Fs;
+x=sin(2*pi*1000*n*Ts) + 0.5*sin(2*pi*2000*n*Ts+3*pi/4)
+
+subplot(3,1,1)
+stem(n,x)
+title('Original Sequence');
+X=fft(x);
+subplot(3,1,2)
+stem(abs(X));
+title('Absolute value of DFT');
+subplot(3,1,3)
+stem(angle(X));
+title('Angle of DFT');
+
+
+///DTFT on a rectangular pulse
+
+fs=500;
+t=-1:1/fs:1;
+x=rectpuls(t,0.12);
+subplot(2,2,1)
+plot(t,x)
+grid on
+
+y=fft(x);
+y=fftshift(y);
+subplot(2,2,2)
+plot(abs(y))
+grid on 
+
+x=rectpuls(t,0.02);
+subplot(2,2,3)
+plot(t,x)
+grid on
+
+y=fft(x);
+y=fftshift(y);
+subplot(2,2,4)
+plot(abs(y))
+grid on 
+
+///////////////////////
+
+x=zeros(32);
+x(12:17,12:17)=ones(6);
+subplot(2,1,1)
+mesh(x)
+title('3D rectangular pulse')
+x=fft2(x);
+x=fftshift(x);
+subplot(2,1,2)
+mesh(abs(x))
+title('3d sinc in frequency domain')
+
+///Gausian Path
+
+[X,Y]=meshgrid(-8:0.5:8);
+z=X.^2+Y.^2;
+subplot(2,1,1)
+mesh(z)
+subplot(2,1,2)
+surf(z)
+
+
+[X,Y]=meshgrid(-8:0.5:8);
+z=exp(-(X.^2+Y.^2)/1.8);
+subplot(2,1,1)
+mesh(z)
+subplot(2,1,2)
+surf(z)
