@@ -1,0 +1,103 @@
+
+FIR(Finite Impulse Response) Signal 
+
+Problem1 : Plot Hamming,Hann,kaiser window function used in design of a FIR filer
+
+Code:
+
+beta=5.2;
+N=20;
+n=1:1:20;
+y=hamming(N);
+y1=hann(N);
+y2=kaiser(N,beta);
+plot(n,y,'r^-',n,y1,'kd:',n,y2,'b*:')
+xlabel('n')
+ylabel('h(n)')
+legend('Hamming','Hann','Kaiser')
+grid on
+
+
+Problem2: Hamming Window
+
+Code:
+
+fc=0.21875;
+N=53;
+Fs=8000;
+wn=hamming(N);
+hn=fir1(N-1,2*fc,wn);
+[H,F]=freqz(hn,1,512,Fs);
+mag=20*log10(abs(H));
+plot(F,mag);
+grid on
+xlabel('f')
+ylabel('|H(h)|(db)')
+
+
+Problem3: Random Noise elimination with LP FIR filter
+
+Code:
+
+t=0:1/Fs:2*pi;
+x=sin(3*pi*t);   %original signal
+xn=x+0.1*rand(1,length(t));   %Noisy signal
+out=filter(hn,1,xn);   %filtered signal
+subplot(3,1,1) 
+
+plot(t,x)
+subplot(3,1,2)
+plot(t,xn)
+subplot(3,1,3)
+plot(out)
+
+
+
+
+
+Problem4: AWGN(Additive White Gaussian Noise) elimination with LP FIR filter
+
+Code:
+
+t=0:1/Fs:2*pi;
+
+x=sin(3*pi*t);   %original signal
+xn=awgn(x,20);   %Noisy signal
+out=filter(hn,1,xn);   %filtered signal
+
+subplot(3,1,1) 
+plot(t,x)
+title('Original Signal')
+subplot(3,1,2)
+plot(t,xn)
+title('Noisy Signal')
+subplot(3,1,3)
+plot(out)
+title('Filtered Signal')
+
+
+Problem 5: BP filter using hamming Window
+
+///FIR BP filter: Pass band =150-250Hz,Transition 
+(dB)=Decibell
+
+Code:
+
+Fs=1000;FN=Fs/2; N=67;
+fc1=125/FN;
+fc2=275/FN;
+Fc = [fc1 fc2];
+hn = fir1(N-1,Fc,hamming(N));
+[H,f]=freqz(hn,1,512,Fs);
+mag=20*log10(abs(H));
+plot(f,mag,'b');
+grid on
+xlabel('f')
+ylabel('H(h)|(db)')
+
+Q.Why window function is necessary to truncate ideal impulse response?
+
+
+
+
+  
