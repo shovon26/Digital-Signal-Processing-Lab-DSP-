@@ -1,0 +1,131 @@
+                                                              
+Problem 1: Design a 10th order band pass(BP) Butterworth filter with a passband from 100 to 200 Hz and plot both
+            impulse response and frequency rsponse.
+			
+Code 1:  
+    Fs=1000; %sampling frequency
+	n = 10; %order of the filter
+	a=10;
+	Wn = [100 200]/500; %Normalized by Fs/2
+	[b,a] = butter(a,Wn);
+	figure(1)
+	[h,t] = impz(b,a,101);
+	plot(t,h)
+	title('Impulse Response')
+	grid on
+	figure(2)
+	freqz(b,a,512,Fs)
+	title('Frequency Response
+	
+	
+	Problem 1:
+	Code 2: 
+	
+	Fs=2000;
+	n=10; Wn=[115 140]/(Fs/2); [b,a] = butter(n,Wn);
+	[h,t]=impz(b,a,101);
+	t=0:1/Fs:0.2;
+	y=2*sin(2*pi*120*t)+ 2*sin(2*pi*130*t);
+	yn=awgn(y,-4);
+	out=filter(h,1,yn);
+	subplot(3,1,1)
+	plot(t,y)
+	subplot(3,1,2)
+	plot(t,yn)
+	subplot(3,1,3)
+	plot(t,out)
+	
+	
+	Problem 2: Design a 10th order BP Chebyshev filter of type-1 with a passband from 100 to 200 Hz and plot the impulse response and frequency response
+	Consider 25 dB ripple in passband.
+	
+	Code:
+	
+	  Fs= 1000;
+	  n = 10;
+	  Rp = 25;
+	  Wn = [100 200]/(Fs/2);
+	  [b,a] = cheby1(n,Rp,Wn);
+	  [y,t] = impz(b,a,101);
+	  figure(1)
+	  plot(t,y)
+	  grid on
+	  title('Impulse Response')
+	  figure(2)
+	  freqz(b,a,512,Fs)
+	  title('Frequency Response')
+	  
+	  
+	Problem 3: Design a stopband filter
+	
+	Code :
+	
+	  Fs= 1000;
+	  n = 10;
+	  Rp = 25;
+	  Wn = [100 200]/(Fs/2);
+	  [b,a] = cheby1(n,Rp,Wn,'stop');
+	  [y,t] = impz(b,a,101);
+	  figure(1)
+	  plot(t,y)
+	  grid on
+	  title('Impulse Response')
+	  figure(2)
+	  freqz(b,a,512,Fs)
+	  title('Frequency Response')
+	   
+	
+	Problem 4: Design a 10th order BP Elliptic filter with a passband from 100 to 200 Hz and plot the impulse response and frequency response
+	Consider 5dB ripple in passband and 50dB of attenuation in the stopband.
+	
+	Code :
+	
+	  Fs= 1000;
+	  n = 10;
+	  Rp = 5;
+	  Rs = 50;  %50dB of attenuation in the stopband
+	  Wn = [100 200]/(Fs/2);
+	  [b,a] = ellip(n,Rp,Rs,Wn);
+	  [y,t] = impz(b,a,101);
+	  figure(1)
+	  plot(t,y)
+	  grid on
+	  title('Impulse Response')
+	  figure(2)
+	  freqz(b,a,512,Fs)
+	  title('Frequency Response')
+	  
+	  
+	Problem 5 : Comparison among Butterworth,Chebyshev and Elliptic Filter
+	
+	 Code : 
+	   Fs=1000; n = 10; 
+	   Wn = [100 200]/500;
+	   Rp=5;  % Ripple in passband
+	   Rs = 50 ; % Rs= 50 dB of attenuation in the stopband
+	   [b,a] = butter(n,Wn); [hn,t] = impz(b,a,512);
+	   [H,f] = freqz(hn,1,512,Fs); mag = 20*log10(abs(H));
+	   % frequency response of Butterworth IIR and conversion in dB
+	   [b1,a1] = cheby1(n,Rp,Wn); [hn1,t] =  impz(b1,a1,512);
+	   [H1,f] = freqz(hn1,1,512); mag1=20*log10(abs(H1));
+	    % frequency response of Chebyshev-1 IIR
+		[b2,a2] = ellip(n,Rp,Rs,Wn); [hn2,t] = impz(b2,a2,512);
+		[H2,f] = freqz(hn2,1,512); mag2=20*log10(abs(H2));
+		plot(f,mag,'r'); hold on; plot(f,mag1,'b'); hold on; plot(f,mag2,'m');
+		legend('Butterworth','Chebyshev','Elliptic')
+		grid on
+	   
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+    
+	
